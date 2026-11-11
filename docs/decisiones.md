@@ -1,0 +1,12 @@
+# Decisiones de diseño
+- **React + Vite / Node + Express:** stack propuesto; se agregó poco: sin router ni librerías de estado (navegación por estado) para mantener el prototipo simple y liviano.
+- **Entrevista dirigida por configuración** (`backend/config/interview.json`): preguntas, opciones, condiciones (`showIf`) e indicadores. Frontend y validación usan la misma definición. Cambiar una pregunta no exige tocar código.
+- **Reglas de derivación separadas** (`derivacion.json`, `organismos.json`): organismos y competencias **ficticios** hasta contar con datos oficiales. La derivación es solo una *sugerencia* que confirma una persona.
+- **Prioridad de revisión ≠ evaluación de riesgo:** una regla simple y explicable (indicadores → inmediata / prioritaria / ordinaria) que solo ordena la bandeja. Se muestra siempre con esa aclaración.
+- **Sin DNI ni domicilio:** minimización de datos. La persona se identifica con códigos anónimos; el contacto y el nombre/apodo son opcionales.
+- **El legajo no guarda el código de borrador** (no se puede vincular borrador y legajo). El seguimiento usa otro código.
+- **El navegador no guarda nada** (ni localStorage ni cookies): el token vive en memoria.
+- **Capa de datos intercambiable:** `repo/fileRepo.js` implementa `list/get/insertWith/update/remove`.
+- **Casos de demostración** marcados `origen: demo`, separados de los generados en pruebas (`origen: prueba`).
+- **Auth provisoria:** claramente marcada en pantalla y en el README; no es seguridad.
+- **Jurisdicción general:** el sistema no está atado a una provincia; las líneas de emergencia (911/144) están en la configuración.

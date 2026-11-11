@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "jurisdiccion": "Demostración (adaptable a cualquier jurisdicción)",
+  "aviso": "Prototipo demostrativo. No es una presentación judicial ni genera un expediente. No cargues datos reales.",
+  "emergencia": {
+    "titulo": "Si estás en peligro, pedí ayuda ahora",
+    "texto": "No hace falta completar nada antes de pedir ayuda. Cuando estés en un lugar seguro, podés seguir.",
+    "lineas": [
+      { "nombre": "Emergencias", "numero": "911" },
+      { "nombre": "Violencia de género (Argentina)", "numero": "144" }
+    ]
+  },
+  "steps": [
+    { "id": "urgencia", "etapa": "Tu seguridad", "type": "single", "required": true,
+      "label": "¿Hay peligro ahora, para vos o para otra persona?",
+      "ayuda": "Si no estás seguro/a, elegí la última opción. Te vamos a mostrar cómo pedir ayuda.",
+      "emergencyOn": ["si", "nose"],
+      "options": [
+        { "value": "si", "label": "Sí, hay peligro ahora", "indicador": "peligro_inmediato" },
+        { "value": "no", "label": "No" },
+        { "value": "nose", "label": "No estoy seguro/a" }
+      ] },
+    { "id": "materia", "etapa": "Tu consulta", "type": "single", "required": true,
+      "label": "¿Sobre qué tema es tu consulta?",
+      "ayuda": "No necesitás saber de leyes. Elegí lo que más se parezca. Si no sabés, elegí \"No sé cómo clasificarlo\".",
+      "options": [
+        { "value": "violencia", "label": "Violencia y protección" },
+        { "value": "familia_ninez", "label": "Familia y niñez" },
+        { "value": "vivienda", "label": "Vivienda" },
+        { "value": "trabajo", "label": "Trabajo y seguridad social" },
+        { "value": "salud", "label": "Salud" },
+        { "value": "discapacidad", "label": "Discapacidad" },
+        { "value": "consumo", "label": "Consumo" },
+        { "value": "vecinal", "label": "Conflicto con vecinos" },
+        { "value": "penal", "label": "Un delito o cuestión penal" },
+        { "value": "administrativo", "label": "Trámite o cuestión administrativa" },
+        { "value": "otra", "label": "Otra situación" },
+        { "value": "no_se", "label": "No sé cómo clasificarlo" }
+      ] },
+    { "id": "afectada", "etapa": "Personas", "type": "single", "required": true,
+      "label": "¿A quién le pasa esto?",
+      "options": [
+        { "value": "yo", "label": "A mí" },
+        { "value": "otra_persona", "label": "A otra persona adulta" },
+        { "value": "nna", "label": "A un niño, niña o adolescente" }
+      ] },
+    { "id": "vulnerabilidades", "etapa": "Personas", "type": "multi", "required": true,
+      "label": "¿Alguna de estas situaciones se aplica?",
+      "ayuda": "Nos sirve para dar atención especial. Podés elegir más de una.",
+      "options": [
+        { "value": "ninez", "label": "Hay niños, niñas o adolescentes involucrados", "indicador": "ninez" },
+        { "value": "embarazo", "label": "Hay un embarazo", "indicador": "embarazo" },
+        { "value": "discapacidad", "label": "Hay una persona con discapacidad", "indicador": "discapacidad" },
+        { "value": "adulta_mayor", "label": "Hay una persona adulta mayor", "indicador": "adulta_mayor" },
+        { "value": "ninguna", "label": "Ninguna de estas", "exclusive": true }
+      ] },
+    { "id": "barreras", "etapa": "Personas", "type": "multi", "required": true,
+      "label": "¿Qué cosas te dificultan hacer este trámite?",
+      "ayuda": "Queremos saber qué te frena para poder ayudarte mejor.",
+      "options": [
+        { "value": "idioma", "label": "Necesito intérprete o hablo otra lengua" },
+        { "value": "lectura", "label": "Me cuesta leer o escribir" },
+        { "value": "conectividad", "label": "No tengo internet o celular propio" },
+        { "value": "distancia", "label": "Vivo lejos de un juzgado u oficina" },
+        { "value": "miedo", "label": "Tengo miedo de represalias" },
+        { "value": "economia", "label": "No puedo pagar traslados o un abogado" },
+        { "value": "ninguna", "label": "Ninguna de estas", "exclusive": true }
+      ] },
+    { "id": "violencia_gravedad", "etapa": "Tu consulta", "type": "multi", "required": true,
+      "showIf": { "materia": ["violencia"] },
+      "label": "¿Pasó alguna de estas cosas?",
+      "options": [
+        { "value": "amenaza_muerte", "label": "Hubo amenazas de muerte", "indicador": "amenaza_muerte" },
+        { "value": "arma", "label": "Se usó un arma o la otra persona tiene acceso a armas", "indicador": "arma" },
+        { "value": "escalada", "label": "La violencia es cada vez más frecuente o más grave", "indicador": "escalada" },
+        { "value": "ninguna", "label": "Ninguna de estas", "exclusive": true }
+      ] },
+    { "id": "medida_incumplida", "etapa": "Tu consulta", "type": "single", "required": true,
+      "showIf": { "materia": ["violencia"] },
+      "label": "¿Hay una medida de protección que no se esté respetando?",
+      "options": [
+        { "value": "si", "label": "Sí", "indicador": "incumplimiento" },
+        { "value": "no", "label": "No" },
+        { "value": "nose", "label": "No sé" }
+      ] },
+    { "id": "antecedentes", "etapa": "Antecedentes", "type": "single", "required": true,
+      "label": "¿Existe o existió una causa o una denuncia por esto?",
+      "options": [
+        { "value": "ninguno", "label": "No, es la primera vez" },
+        { "value": "causa", "label": "Sí, existe o existió una causa judicial" },
+        { "value": "denuncia", "label": "Hice una denuncia antes, pero no sé si hay causa" },
+        { "value": "nose", "label": "No sé" }
+      ] },
+    { "id": "expediente", "etapa": "Antecedentes", "type": "text", "maxLength": 80,
+      "showIf": { "antecedentes": ["causa"] },
+      "label": "Número de expediente o juzgado, si lo sabés (opcional)",
+      "ayuda": "Podés dejarlo vacío." },
+    { "id": "relato", "etapa": "Tu consulta", "type": "textarea", "maxLength": 2000,
+      "label": "Si querés, contanos con tus palabras qué pasó (opcional)",
+      "ayuda": "No pongas nombres, direcciones ni datos que no quieras compartir. Podés dejarlo vacío." },
+    { "id": "pedido", "etapa": "Tu pedido", "type": "multi", "required": true,
+      "label": "¿Qué necesitás?",
+      "options": [
+        { "value": "orientacion", "label": "Que me expliquen qué puedo hacer" },
+        { "value": "proteccion", "label": "Protección o resguardo" },
+        { "value": "iniciar_tramite", "label": "Iniciar un trámite o reclamo" },
+        { "value": "informar_novedad", "label": "Informar algo nuevo de una causa que ya tengo" },
+        { "value": "informacion", "label": "Solo quiero información" },
+        { "value": "no_se", "label": "No sé qué necesito" }
+      ] },
+    { "id": "contacto_medio", "etapa": "Contacto", "type": "single", "required": true,
+      "label": "¿Cómo preferís que te contacten?",
+      "ayuda": "Elegí la forma más segura para vos.",
+      "options": [
+        { "value": "telefono_seguro", "label": "Por teléfono (es seguro para mí)" },
+        { "value": "otro_medio", "label": "Por otro medio" },
+        { "value": "no_contactar", "label": "Prefiero no ser contactado/a; consulto yo con mi número de seguimiento" }
+      ] },
+    { "id": "alias", "etapa": "Contacto", "type": "text", "maxLength": 40,
+      "label": "¿Cómo querés que te llamemos? (opcional, puede ser un apodo)" },
+    { "id": "contacto_dato", "etapa": "Contacto", "type": "text", "maxLength": 80,
+      "showIf": { "contacto_medio": ["telefono_seguro", "otro_medio"] },
+      "label": "Teléfono o medio de contacto (opcional)",
+      "ayuda": "En esta demostración usá datos inventados." }
+  ]
+}

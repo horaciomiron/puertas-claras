@@ -1,0 +1,19 @@
+{
+  "responsables": ["Operador/a Demo 1", "Operador/a Demo 2", "Operador/a Demo 3"],
+  "estados": {
+    "recibido": { "label": "Recibido", "publico": "Tu consulta llegó. Todavía no fue revisada por una persona." },
+    "en_revision": { "label": "En revisión", "publico": "Una persona del equipo está revisando tu consulta." },
+    "info_adicional": { "label": "Información adicional solicitada", "publico": "El equipo necesita más información para poder orientarte." },
+    "derivado": { "label": "Derivado a otro organismo", "publico": "Tu consulta fue enviada al organismo que corresponde." },
+    "intervencion": { "label": "Posible intervención judicial", "publico": "El equipo evalúa que podría corresponder una intervención judicial." },
+    "orientado": { "label": "Orientación brindada", "publico": "El equipo te dejó una orientación sobre los pasos a seguir." },
+    "sin_intervencion": { "label": "Sin intervención institucional por ahora", "publico": "Por ahora no se identificó una intervención. Podés pedir que se revise de nuevo." }
+  },
+  "resultados": {
+    "intervencion_judicial": { "label": "Posible intervención judicial", "estado": "intervencion" },
+    "info_adicional": { "label": "Solicitud de información adicional", "estado": "info_adicional" },
+    "derivacion": { "label": "Derivación a otro organismo", "estado": "derivado" },
+    "orientacion": { "label": "Orientación sin derivación", "estado": "orientado" },
+    "sin_intervencion": { "label": "No se identifica por el momento una intervención institucional", "estado": "sin_intervencion" }
+  }
+}

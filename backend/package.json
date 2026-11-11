@@ -1,0 +1,14 @@
+{
+  "name": "puertas-claras-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "API REST de Puertas Claras (prototipo académico PIL 2026)",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test test/api.test.js"
+  },
+  "dependencies": { "cors": "^2.8.5", "express": "^4.21.2" }
+}
