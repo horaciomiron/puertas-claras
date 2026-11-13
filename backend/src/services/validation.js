@@ -1,5 +1,9 @@
 import { HttpError } from '../errors.js';
 
+// Un "paso" es una pantalla; puede tener varios campos (fields). Un "átomo" es una pregunta/campo.
+export const atoms = (interview) => interview.steps.flatMap((s) =>
+  s.fields ? s.fields.map((f) => ({ ...f, showIf: s.showIf, screen: s.id, etapa: s.etapa })) : [{ ...s, screen: s.id }]);
+
 export function isVisible(step, answers) {
   if (!step.showIf) return true;
   return Object.entries(step.showIf).every(([k, vals]) => {
@@ -15,28 +19,29 @@ export function validateAnswers(interview, raw, { partial = false } = {}) {
     throw new HttpError(400, 'Las respuestas deben ser un objeto.');
   const out = {};
   const errors = [];
-  for (const step of interview.steps) {
-    if (!isVisible(step, out)) continue;
-    const v = raw[step.id];
+  for (const a of atoms(interview)) {
+    if (!isVisible(a, out)) continue;
+    const v = raw[a.id];
     const empty = v === undefined || v === null || v === '' || (Array.isArray(v) && !v.length);
     if (empty) {
-      if (step.required && !partial) errors.push({ campo: step.id, mensaje: 'Falta responder esta pregunta.' });
+      if (a.required && !partial) errors.push({ campo: a.id, mensaje: 'Falta responder esta pregunta.' });
       continue;
     }
-    const values = step.options?.map((o) => o.value) || [];
-    if (step.type === 'single') {
-      if (typeof v !== 'string' || !values.includes(v)) { errors.push({ campo: step.id, mensaje: 'Opción no válida.' }); continue; }
-      out[step.id] = v;
-    } else if (step.type === 'multi') {
+    const values = a.options?.filter((o) => !o.disabled).map((o) => o.value) || [];
+    if (a.type === 'single' || a.type === 'select') {
+      if (typeof v !== 'string' || !values.includes(v)) { errors.push({ campo: a.id, mensaje: 'Opción no válida.' }); continue; }
+      out[a.id] = v;
+    } else if (a.type === 'multi') {
       if (!Array.isArray(v) || v.length > 12 || v.some((x) => typeof x !== 'string' || !values.includes(x))) {
-        errors.push({ campo: step.id, mensaje: 'Opciones no válidas.' }); continue;
+        errors.push({ campo: a.id, mensaje: 'Opciones no válidas.' }); continue;
       }
-      out[step.id] = [...new Set(v)];
+      out[a.id] = [...new Set(v)];
     } else {
-      if (typeof v !== 'string') { errors.push({ campo: step.id, mensaje: 'Debe ser texto.' }); continue; }
+      if (typeof v !== 'string') { errors.push({ campo: a.id, mensaje: 'Debe ser texto.' }); continue; }
       const t = clean(v);
-      if (t.length > (step.maxLength || 200)) { errors.push({ campo: step.id, mensaje: `Máximo ${step.maxLength || 200} caracteres.` }); continue; }
-      if (t) out[step.id] = t;
+      const max = a.maxLength || 200;
+      if (t.length > max) { errors.push({ campo: a.id, mensaje: `Máximo ${max} caracteres.` }); continue; }
+      if (t) out[a.id] = t;
     }
   }
   if (errors.length) throw new HttpError(400, 'Hay respuestas para corregir.', errors);
@@ -46,6 +51,7 @@ export function validateAnswers(interview, raw, { partial = false } = {}) {
 export function validateTriage(body, config) {
   const errors = [];
   const { estados, resultados, responsables } = config.gestion;
+  const nombres = responsables.map((r) => r.nombre);
   const r = body.resultado;
   const p = {};
   if (body.estado !== undefined) {
@@ -53,7 +59,7 @@ export function validateTriage(body, config) {
     else p.estado = body.estado;
   }
   if (body.responsable !== undefined) {
-    if (body.responsable !== '' && !responsables.includes(body.responsable)) errors.push({ campo: 'responsable', mensaje: 'Responsable no válido.' });
+    if (body.responsable !== '' && !nombres.includes(body.responsable)) errors.push({ campo: 'responsable', mensaje: 'Responsable no válido.' });
     else p.responsable = body.responsable || null;
   }
   if (r !== undefined) {

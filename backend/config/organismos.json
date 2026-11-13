@@ -1,11 +1,9 @@
 [
-  { "id": "ORG-DEMO-01", "nombre": "Juzgado Demo de Familia y Violencia (ficticio)", "tipo": "Juzgado", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
-  { "id": "ORG-DEMO-02", "nombre": "Oficina Demo de Asistencia a la Víctima (ficticia)", "tipo": "Asistencia", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
-  { "id": "ORG-DEMO-03", "nombre": "Defensoría Demo de Niñez y Adolescencia (ficticia)", "tipo": "Defensoría", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
-  { "id": "ORG-DEMO-04", "nombre": "Servicio Demo de Vivienda y Hábitat (ficticio)", "tipo": "Servicio administrativo", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
-  { "id": "ORG-DEMO-05", "nombre": "Juzgado Demo Laboral y de Seguridad Social (ficticio)", "tipo": "Juzgado", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
-  { "id": "ORG-DEMO-06", "nombre": "Programa Demo de Salud y Discapacidad (ficticio)", "tipo": "Institución de asistencia", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
-  { "id": "ORG-DEMO-07", "nombre": "Centro Demo de Mediación Vecinal y Consumo (ficticio)", "tipo": "Mediación", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
-  { "id": "ORG-DEMO-08", "nombre": "Fiscalía Demo Penal (ficticia)", "tipo": "Fiscalía", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
-  { "id": "ORG-DEMO-09", "nombre": "Mesa Demo de Orientación General (ficticia)", "tipo": "Mesa de entradas", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" }
+  { "id": "JUZ-DEMO-1", "nombre": "Juzgado N.º 1 (demo)", "tipo": "Juzgado", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
+  { "id": "JUZ-DEMO-2", "nombre": "Juzgado N.º 2 (demo)", "tipo": "Juzgado", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
+  { "id": "JUZ-DEMO-3", "nombre": "Juzgado N.º 3 (demo)", "tipo": "Juzgado", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
+  { "id": "JUZ-DEMO-4", "nombre": "Juzgado N.º 4 (demo)", "tipo": "Juzgado", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
+  { "id": "JUZ-DEMO-5", "nombre": "Juzgado N.º 5 (demo)", "tipo": "Juzgado", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
+  { "id": "ORG-DEMO-02", "nombre": "Oficina de Asistencia a la Víctima (demo)", "tipo": "Asistencia", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" },
+  { "id": "ORG-DEMO-03", "nombre": "Defensoría de Niñez y Adolescencia (demo)", "tipo": "Defensoría", "horario": "Horario ficticio de demostración", "contacto": "Sin datos reales" }
 ]

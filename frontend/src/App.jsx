@@ -16,7 +16,7 @@ export default function App() {
       <div className="app"><div className="shell">
         <header className="top">
           <div className="brand"><div className="logo"><Logo /></div>
-            <div><h1>Puertas Claras <span className="ver">v.1</span></h1><p>Orientación y acceso a la Justicia</p></div></div>
+            <div><h1>Puertas Claras <span className="ver">v.1</span></h1><p>Acceso a la Justicia · Violencia familiar y de género</p></div></div>
           <div className="top-tools">
             <div className="tagline">La Justicia empieza por poder entrar.</div>
             <div className="fontbtns" role="group" aria-label="Tamaño del texto">
@@ -36,10 +36,10 @@ export default function App() {
             <section className="hero"><div className="hero-inner">
               <div className="hero-kicker">Prototipo académico · PIL 2026</div>
               <h2>Una puerta más clara para entrar a la Justicia</h2>
-              <p>Orientación guiada para la ciudadanía e información ordenada para quienes trabajan en la OGU. La herramienta organiza y destaca; la evaluación y la decisión siguen siendo humanas.</p>
+              <p>Una entrevista guiada para denunciar violencia familiar o de género, o informar algo nuevo en una causa existente, y un panel que ordena la información para la OGU. La herramienta organiza y destaca; la evaluación y la decisión siguen siendo humanas.</p>
               <div className="entry-grid">
-                <button className="entry-card" onClick={() => setView('citizen')}><div className="entry-icon" aria-hidden="true">↗</div><h3>Quiero hacer una consulta</h3><p>Respondé preguntas simples, paso a paso. También podés ver cómo va una consulta anterior.</p></button>
-                <button className="entry-card" onClick={() => setView('staff')}><div className="entry-icon" aria-hidden="true">▦</div><h3>Soy operador/a judicial</h3><p>Ingresá a la bandeja para revisar, filtrar, gestionar y derivar legajos.</p></button>
+                <button className="entry-card" onClick={() => setView('citizen')}><div className="entry-icon" aria-hidden="true">↗</div><h3>Necesito denunciar o informar algo</h3><p>Respondé preguntas simples, paso a paso. También podés ver cómo va tu presentación.</p></button>
+                <button className="entry-card" onClick={() => setView('staff')}><div className="entry-icon" aria-hidden="true">▦</div><h3>Soy operador/a judicial</h3><p>Ingresá a la bandeja para revisar, asignar y validar la derivación de los legajos.</p></button>
               </div>
             </div></section>
           )}

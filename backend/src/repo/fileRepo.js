@@ -44,6 +44,7 @@ export class FileRepo {
     await this.persist(c);
     return d[i];
   }
+  async clear(c) { this.cache.set(c, []); await this.persist(c); }
   async remove(c, id) {
     const d = await this.load(c);
     const i = d.findIndex((x) => x.id === id);

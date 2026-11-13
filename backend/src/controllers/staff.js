@@ -3,13 +3,14 @@ import { HttpError } from '../errors.js';
 import { createSession } from '../services/sessions.js';
 import { validateTriage } from '../services/validation.js';
 import { computeStats } from '../services/stats.js';
+import { armarCorreo } from '../services/legajo.js';
 
 const h = (s) => createHash('sha256').update(String(s)).digest();
 const row = (l, c) => ({
   id: l.id, codigoSeguimiento: l.codigoSeguimiento, creadoEn: l.creadoEn, origen: l.origen,
-  materia: l.materia, prioridad: l.prioridad, indicadores: l.indicadores, estado: l.estado,
-  estadoLabel: c.gestion.estados[l.estado].label, responsable: l.responsable,
-  derivacion: l.derivacionSugerida.nombre, resultado: l.resultado?.tipo || null,
+  entrada: l.entrada, entradaLabel: l.entradaLabel, tipos: l.tipos, medidas: l.medidas, prioridad: l.prioridad, indicadores: l.indicadores,
+  estado: l.estado, estadoLabel: c.gestion.estados[l.estado].label, responsable: l.responsable,
+  antecedente: l.derivacion.antecedente.existe === 'si', juzgado: l.derivacion.sugerido, resultado: l.resultado?.tipo || null,
 });
 
 export const staffController = ({ repo, config }) => ({
@@ -22,8 +23,8 @@ export const staffController = ({ repo, config }) => ({
   },
 
   catalogos: (_req, res) => res.json({
-    estados: config.gestion.estados, resultados: config.gestion.resultados, responsables: config.gestion.responsables,
-    organismos: config.organismos, materias: config.interview.steps.find((s) => s.id === 'materia').options,
+    estados: config.gestion.estados, resultados: config.gestion.resultados, responsables: config.gestion.responsables.map((r) => r.nombre),
+    organismos: config.organismos, entradas: config.interview.steps.find((s) => s.id === 'entrada').options,
     aviso: config.reglas.aviso,
   }),
 
@@ -31,9 +32,9 @@ export const staffController = ({ repo, config }) => ({
     const q = req.query;
     const text = (q.q || '').toString().toLowerCase();
     const rows = await repo.list('legajos', (l) =>
-      (!q.estado || l.estado === q.estado) && (!q.materia || l.materia.value === q.materia) &&
+      (!q.estado || l.estado === q.estado) && (!q.entrada || l.entrada === q.entrada || (q.entrada === 'nueva' && l.entrada === 'emergencia')) &&
       (!q.prioridad || l.prioridad.key === q.prioridad) && (!q.origen || l.origen === q.origen) &&
-      (!q.organismo || l.derivacionSugerida.organismoId === q.organismo || l.resultado?.organismoId === q.organismo) &&
+      (!q.organismo || l.derivacion.sugeridoId === q.organismo || l.resultado?.organismoId === q.organismo) &&
       (!q.responsable || (q.responsable === '__none' ? !l.responsable : l.responsable === q.responsable)) &&
       (!q.desde || l.creadoEn.slice(0, 10) >= q.desde) && (!q.hasta || l.creadoEn.slice(0, 10) <= q.hasta) &&
       (!text || l.id.toLowerCase().includes(text) || l.codigoSeguimiento.toLowerCase().includes(text)));
@@ -61,6 +62,10 @@ export const staffController = ({ repo, config }) => ({
     if (p.responsable !== undefined && p.responsable !== l.responsable) acciones.push(`Responsable: ${p.responsable || 'sin asignar'}`);
     if (p.resultado) acciones.push(`Resultado: ${config.gestion.resultados[p.resultado.tipo].label}`);
     p.historial = [...l.historial, { en: now, quien, accion: acciones.join(' · ') || 'Actualización' }];
+    if (p.responsable && p.responsable !== l.responsable) {
+      const r = config.gestion.responsables.find((x) => x.nombre === p.responsable);
+      p.correo = armarCorreo(l, r.nombre, r.email);
+    }
     if (!l.primeraRespuestaEn) p.primeraRespuestaEn = now;
     res.json(await repo.update('legajos', l.id, p));
   },

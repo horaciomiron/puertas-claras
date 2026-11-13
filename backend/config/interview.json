@@ -1,126 +1,1312 @@
 {
-  "version": 1,
-  "jurisdiccion": "Demostración (adaptable a cualquier jurisdicción)",
-  "aviso": "Prototipo demostrativo. No es una presentación judicial ni genera un expediente. No cargues datos reales.",
-  "emergencia": {
-    "titulo": "Si estás en peligro, pedí ayuda ahora",
-    "texto": "No hace falta completar nada antes de pedir ayuda. Cuando estés en un lugar seguro, podés seguir.",
-    "lineas": [
-      { "nombre": "Emergencias", "numero": "911" },
-      { "nombre": "Violencia de género (Argentina)", "numero": "144" }
-    ]
-  },
-  "steps": [
-    { "id": "urgencia", "etapa": "Tu seguridad", "type": "single", "required": true,
-      "label": "¿Hay peligro ahora, para vos o para otra persona?",
-      "ayuda": "Si no estás seguro/a, elegí la última opción. Te vamos a mostrar cómo pedir ayuda.",
-      "emergencyOn": ["si", "nose"],
-      "options": [
-        { "value": "si", "label": "Sí, hay peligro ahora", "indicador": "peligro_inmediato" },
-        { "value": "no", "label": "No" },
-        { "value": "nose", "label": "No estoy seguro/a" }
-      ] },
-    { "id": "materia", "etapa": "Tu consulta", "type": "single", "required": true,
-      "label": "¿Sobre qué tema es tu consulta?",
-      "ayuda": "No necesitás saber de leyes. Elegí lo que más se parezca. Si no sabés, elegí \"No sé cómo clasificarlo\".",
-      "options": [
-        { "value": "violencia", "label": "Violencia y protección" },
-        { "value": "familia_ninez", "label": "Familia y niñez" },
-        { "value": "vivienda", "label": "Vivienda" },
-        { "value": "trabajo", "label": "Trabajo y seguridad social" },
-        { "value": "salud", "label": "Salud" },
-        { "value": "discapacidad", "label": "Discapacidad" },
-        { "value": "consumo", "label": "Consumo" },
-        { "value": "vecinal", "label": "Conflicto con vecinos" },
-        { "value": "penal", "label": "Un delito o cuestión penal" },
-        { "value": "administrativo", "label": "Trámite o cuestión administrativa" },
-        { "value": "otra", "label": "Otra situación" },
-        { "value": "no_se", "label": "No sé cómo clasificarlo" }
-      ] },
-    { "id": "afectada", "etapa": "Personas", "type": "single", "required": true,
-      "label": "¿A quién le pasa esto?",
-      "options": [
-        { "value": "yo", "label": "A mí" },
-        { "value": "otra_persona", "label": "A otra persona adulta" },
-        { "value": "nna", "label": "A un niño, niña o adolescente" }
-      ] },
-    { "id": "vulnerabilidades", "etapa": "Personas", "type": "multi", "required": true,
-      "label": "¿Alguna de estas situaciones se aplica?",
-      "ayuda": "Nos sirve para dar atención especial. Podés elegir más de una.",
-      "options": [
-        { "value": "ninez", "label": "Hay niños, niñas o adolescentes involucrados", "indicador": "ninez" },
-        { "value": "embarazo", "label": "Hay un embarazo", "indicador": "embarazo" },
-        { "value": "discapacidad", "label": "Hay una persona con discapacidad", "indicador": "discapacidad" },
-        { "value": "adulta_mayor", "label": "Hay una persona adulta mayor", "indicador": "adulta_mayor" },
-        { "value": "ninguna", "label": "Ninguna de estas", "exclusive": true }
-      ] },
-    { "id": "barreras", "etapa": "Personas", "type": "multi", "required": true,
-      "label": "¿Qué cosas te dificultan hacer este trámite?",
-      "ayuda": "Queremos saber qué te frena para poder ayudarte mejor.",
-      "options": [
-        { "value": "idioma", "label": "Necesito intérprete o hablo otra lengua" },
-        { "value": "lectura", "label": "Me cuesta leer o escribir" },
-        { "value": "conectividad", "label": "No tengo internet o celular propio" },
-        { "value": "distancia", "label": "Vivo lejos de un juzgado u oficina" },
-        { "value": "miedo", "label": "Tengo miedo de represalias" },
-        { "value": "economia", "label": "No puedo pagar traslados o un abogado" },
-        { "value": "ninguna", "label": "Ninguna de estas", "exclusive": true }
-      ] },
-    { "id": "violencia_gravedad", "etapa": "Tu consulta", "type": "multi", "required": true,
-      "showIf": { "materia": ["violencia"] },
-      "label": "¿Pasó alguna de estas cosas?",
-      "options": [
-        { "value": "amenaza_muerte", "label": "Hubo amenazas de muerte", "indicador": "amenaza_muerte" },
-        { "value": "arma", "label": "Se usó un arma o la otra persona tiene acceso a armas", "indicador": "arma" },
-        { "value": "escalada", "label": "La violencia es cada vez más frecuente o más grave", "indicador": "escalada" },
-        { "value": "ninguna", "label": "Ninguna de estas", "exclusive": true }
-      ] },
-    { "id": "medida_incumplida", "etapa": "Tu consulta", "type": "single", "required": true,
-      "showIf": { "materia": ["violencia"] },
-      "label": "¿Hay una medida de protección que no se esté respetando?",
-      "options": [
-        { "value": "si", "label": "Sí", "indicador": "incumplimiento" },
-        { "value": "no", "label": "No" },
-        { "value": "nose", "label": "No sé" }
-      ] },
-    { "id": "antecedentes", "etapa": "Antecedentes", "type": "single", "required": true,
-      "label": "¿Existe o existió una causa o una denuncia por esto?",
-      "options": [
-        { "value": "ninguno", "label": "No, es la primera vez" },
-        { "value": "causa", "label": "Sí, existe o existió una causa judicial" },
-        { "value": "denuncia", "label": "Hice una denuncia antes, pero no sé si hay causa" },
-        { "value": "nose", "label": "No sé" }
-      ] },
-    { "id": "expediente", "etapa": "Antecedentes", "type": "text", "maxLength": 80,
-      "showIf": { "antecedentes": ["causa"] },
-      "label": "Número de expediente o juzgado, si lo sabés (opcional)",
-      "ayuda": "Podés dejarlo vacío." },
-    { "id": "relato", "etapa": "Tu consulta", "type": "textarea", "maxLength": 2000,
-      "label": "Si querés, contanos con tus palabras qué pasó (opcional)",
-      "ayuda": "No pongas nombres, direcciones ni datos que no quieras compartir. Podés dejarlo vacío." },
-    { "id": "pedido", "etapa": "Tu pedido", "type": "multi", "required": true,
-      "label": "¿Qué necesitás?",
-      "options": [
-        { "value": "orientacion", "label": "Que me expliquen qué puedo hacer" },
-        { "value": "proteccion", "label": "Protección o resguardo" },
-        { "value": "iniciar_tramite", "label": "Iniciar un trámite o reclamo" },
-        { "value": "informar_novedad", "label": "Informar algo nuevo de una causa que ya tengo" },
-        { "value": "informacion", "label": "Solo quiero información" },
-        { "value": "no_se", "label": "No sé qué necesito" }
-      ] },
-    { "id": "contacto_medio", "etapa": "Contacto", "type": "single", "required": true,
-      "label": "¿Cómo preferís que te contacten?",
-      "ayuda": "Elegí la forma más segura para vos.",
-      "options": [
-        { "value": "telefono_seguro", "label": "Por teléfono (es seguro para mí)" },
-        { "value": "otro_medio", "label": "Por otro medio" },
-        { "value": "no_contactar", "label": "Prefiero no ser contactado/a; consulto yo con mi número de seguimiento" }
-      ] },
-    { "id": "alias", "etapa": "Contacto", "type": "text", "maxLength": 40,
-      "label": "¿Cómo querés que te llamemos? (opcional, puede ser un apodo)" },
-    { "id": "contacto_dato", "etapa": "Contacto", "type": "text", "maxLength": 80,
-      "showIf": { "contacto_medio": ["telefono_seguro", "otro_medio"] },
-      "label": "Teléfono o medio de contacto (opcional)",
-      "ayuda": "En esta demostración usá datos inventados." }
+ "version": 2,
+ "jurisdiccion": "Demostración · violencia familiar y de género (OGU)",
+ "aviso": "Prototipo demostrativo. No es una presentación judicial ni genera un expediente. No cargues datos reales.",
+ "emergencia": {
+  "titulo": "Si hay peligro inmediato, pedí ayuda ahora",
+  "texto": "Si hay peligro inmediato, este asistente no reemplaza un servicio de emergencia. Comunicate con el 911. No hace falta completar nada antes de pedir ayuda.",
+  "lineas": [
+   {
+    "nombre": "Emergencias",
+    "numero": "911"
+   },
+   {
+    "nombre": "Violencia de género (Argentina)",
+    "numero": "144"
+   }
   ]
+ },
+ "steps": [
+  {
+   "id": "entrada",
+   "etapa": "Inicio",
+   "type": "single",
+   "label": "¿Necesitás denunciar una situación de violencia familiar o de género, o informar algo nuevo en una causa que ya tenés?",
+   "required": true,
+   "emergencyOn": [
+    "emergencia"
+   ],
+   "options": [
+    {
+     "value": "nueva",
+     "label": "Quiero hacer una denuncia nueva"
+    },
+    {
+     "value": "existente",
+     "label": "Ya tengo una causa y necesito informar algo nuevo"
+    },
+    {
+     "value": "emergencia",
+     "label": "Necesito ayuda porque hay una emergencia",
+     "indicador": "peligro_inmediato"
+    }
+   ]
+  },
+  {
+   "id": "urgencia",
+   "etapa": "Tu seguridad",
+   "type": "single",
+   "label": "¿La situación de violencia está ocurriendo ahora o alguna persona está en peligro inmediato?",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "existente"
+    ]
+   },
+   "emergencyOn": [
+    "si",
+    "nose"
+   ],
+   "ayuda": "Si no estás seguro/a, elegí \"No estoy seguro/a\". Te vamos a mostrar cómo pedir ayuda.",
+   "options": [
+    {
+     "value": "si",
+     "label": "Sí",
+     "indicador": "peligro_inmediato"
+    },
+    {
+     "value": "no",
+     "label": "No"
+    },
+    {
+     "value": "nose",
+     "label": "No estoy seguro/a"
+    }
+   ]
+  },
+  {
+   "id": "afectada",
+   "etapa": "Personas",
+   "type": "single",
+   "label": "¿La situación de violencia te ocurrió a vos?",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ]
+   },
+   "options": [
+    {
+     "value": "yo",
+     "label": "Sí"
+    },
+    {
+     "value": "otra",
+     "label": "No, quiero informar una situación que afecta a otra persona"
+    }
+   ]
+  },
+  {
+   "id": "afectada_tipo",
+   "etapa": "Personas",
+   "type": "single",
+   "label": "¿A quién afecta?",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ],
+    "afectada": [
+     "otra"
+    ]
+   },
+   "options": [
+    {
+     "value": "nna",
+     "label": "Niño, niña o adolescente",
+     "indicador": "ninez"
+    },
+    {
+     "value": "adulta",
+     "label": "Persona adulta"
+    },
+    {
+     "value": "adulta_mayor",
+     "label": "Persona adulta mayor",
+     "indicador": "adulta_mayor"
+    },
+    {
+     "value": "discapacidad",
+     "label": "Persona con discapacidad",
+     "indicador": "discapacidad"
+    },
+    {
+     "value": "otra",
+     "label": "Otra"
+    }
+   ]
+  },
+  {
+   "id": "datos",
+   "etapa": "Tus datos",
+   "type": "group",
+   "label": "Tus datos de contacto",
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ]
+   },
+   "ayuda": "Pedimos solo lo necesario. El DNI es opcional. En esta demostración usá datos inventados.",
+   "fields": [
+    {
+     "id": "nombre",
+     "type": "text",
+     "label": "Nombre y apellido",
+     "maxLength": 80,
+     "required": true
+    },
+    {
+     "id": "dni",
+     "type": "text",
+     "label": "DNI (si lo conocés o querés informarlo)",
+     "maxLength": 20
+    },
+    {
+     "id": "domicilio",
+     "type": "text",
+     "label": "Domicilio actual",
+     "maxLength": 120
+    },
+    {
+     "id": "telefono",
+     "type": "text",
+     "label": "Teléfono",
+     "maxLength": 40
+    },
+    {
+     "id": "seguro",
+     "type": "select",
+     "label": "¿Es seguro que nos comuniquemos con vos a este número?",
+     "options": [
+      {
+       "value": "si",
+       "label": "Sí"
+      },
+      {
+       "value": "no",
+       "label": "No"
+      },
+      {
+       "value": "otro",
+       "label": "Prefiero otro medio"
+      }
+     ],
+     "required": true
+    }
+   ]
+  },
+  {
+   "id": "denunciado",
+   "etapa": "Persona denunciada",
+   "type": "group",
+   "label": "Datos de la persona denunciada",
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ]
+   },
+   "ayuda": "Completá lo que sepas. Si no sabés algo, dejalo vacío: no vas a quedar frenado/a.",
+   "fields": [
+    {
+     "id": "d_nombre",
+     "type": "text",
+     "label": "Nombre y apellido",
+     "maxLength": 80
+    },
+    {
+     "id": "d_vinculo",
+     "type": "select",
+     "label": "Vínculo con la persona afectada",
+     "options": [
+      {
+       "value": "pareja",
+       "label": "Pareja"
+      },
+      {
+       "value": "expareja",
+       "label": "Expareja"
+      },
+      {
+       "value": "conyuge",
+       "label": "Cónyuge"
+      },
+      {
+       "value": "exconyuge",
+       "label": "Ex cónyuge"
+      },
+      {
+       "value": "progenitor",
+       "label": "Progenitor/a de hijos/as en común"
+      },
+      {
+       "value": "padre",
+       "label": "Padre"
+      },
+      {
+       "value": "madre",
+       "label": "Madre"
+      },
+      {
+       "value": "hijo",
+       "label": "Hijo/a"
+      },
+      {
+       "value": "hermano",
+       "label": "Hermano/a"
+      },
+      {
+       "value": "otro_familiar",
+       "label": "Otro familiar"
+      },
+      {
+       "value": "otra",
+       "label": "Otra relación"
+      }
+     ],
+     "required": true
+    },
+    {
+     "id": "d_convivencia",
+     "type": "select",
+     "label": "¿Conviven actualmente?",
+     "options": [
+      {
+       "value": "si",
+       "label": "Sí"
+      },
+      {
+       "value": "no",
+       "label": "No"
+      },
+      {
+       "value": "aveces",
+       "label": "A veces"
+      },
+      {
+       "value": "nose",
+       "label": "No sé"
+      }
+     ]
+    },
+    {
+     "id": "d_domicilio",
+     "type": "text",
+     "label": "Domicilio, si se conoce",
+     "maxLength": 120
+    },
+    {
+     "id": "d_trabajo",
+     "type": "text",
+     "label": "Lugar de trabajo, si se conoce",
+     "maxLength": 120
+    },
+    {
+     "id": "d_telefono",
+     "type": "text",
+     "label": "Teléfono, si se conoce",
+     "maxLength": 40
+    },
+    {
+     "id": "d_referencias",
+     "type": "text",
+     "label": "Referencias para ubicarla (opcional)",
+     "maxLength": 120
+    }
+   ]
+  },
+  {
+   "id": "ninos",
+   "etapa": "Niños/as y vulnerabilidades",
+   "type": "single",
+   "label": "¿Hay niños, niñas o adolescentes vinculados con la situación?",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ]
+   },
+   "options": [
+    {
+     "value": "si",
+     "label": "Sí",
+     "indicador": "ninez"
+    },
+    {
+     "value": "no",
+     "label": "No"
+    },
+    {
+     "value": "nose",
+     "label": "No sé"
+    }
+   ]
+  },
+  {
+   "id": "ninos_detalle",
+   "etapa": "Niños/as y vulnerabilidades",
+   "type": "group",
+   "label": "Sobre los niños, niñas o adolescentes",
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ],
+    "ninos": [
+     "si"
+    ]
+   },
+   "ayuda": "Todo es opcional.",
+   "fields": [
+    {
+     "id": "n_edad",
+     "type": "text",
+     "label": "Edad/es",
+     "maxLength": 40
+    },
+    {
+     "id": "n_relacion",
+     "type": "text",
+     "label": "Relación con vos y con la persona denunciada",
+     "maxLength": 80
+    },
+    {
+     "id": "n_presentes",
+     "type": "select",
+     "label": "¿Estuvieron presentes?",
+     "options": [
+      {
+       "value": "si",
+       "label": "Sí"
+      },
+      {
+       "value": "no",
+       "label": "No"
+      },
+      {
+       "value": "nose",
+       "label": "No sé"
+      }
+     ]
+    },
+    {
+     "id": "n_violencia",
+     "type": "select",
+     "label": "¿También sufrieron violencia?",
+     "options": [
+      {
+       "value": "si",
+       "label": "Sí"
+      },
+      {
+       "value": "no",
+       "label": "No"
+      },
+      {
+       "value": "nose",
+       "label": "No sé"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "vulnerabilidades",
+   "etapa": "Niños/as y vulnerabilidades",
+   "type": "multi",
+   "label": "¿Hay alguna persona en alguna de estas situaciones?",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ]
+   },
+   "ayuda": "Podés elegir más de una.",
+   "options": [
+    {
+     "value": "embarazo",
+     "label": "Embarazo",
+     "indicador": "embarazo"
+    },
+    {
+     "value": "discapacidad",
+     "label": "Discapacidad",
+     "indicador": "discapacidad"
+    },
+    {
+     "value": "adulta_mayor",
+     "label": "Persona adulta mayor",
+     "indicador": "adulta_mayor"
+    },
+    {
+     "value": "salud_grave",
+     "label": "Problema grave de salud",
+     "indicador": "salud_grave"
+    },
+    {
+     "value": "otra",
+     "label": "Otra situación"
+    },
+    {
+     "value": "ninguna",
+     "label": "Ninguna",
+     "exclusive": true
+    }
+   ]
+  },
+  {
+   "id": "barreras",
+   "etapa": "Niños/as y vulnerabilidades",
+   "type": "multi",
+   "label": "¿Qué cosas te dificultan hacer este trámite? (opcional)",
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ]
+   },
+   "ayuda": "Queremos saber qué te frena para poder ayudarte mejor.",
+   "options": [
+    {
+     "value": "idioma",
+     "label": "Necesito intérprete o hablo otra lengua"
+    },
+    {
+     "value": "lectura",
+     "label": "Me cuesta leer o escribir"
+    },
+    {
+     "value": "conectividad",
+     "label": "No tengo internet o celular propio"
+    },
+    {
+     "value": "distancia",
+     "label": "Vivo lejos de un juzgado u oficina"
+    },
+    {
+     "value": "miedo",
+     "label": "Tengo miedo de represalias"
+    },
+    {
+     "value": "economia",
+     "label": "No puedo pagar traslados o un abogado"
+    },
+    {
+     "value": "ninguna",
+     "label": "Ninguna de estas",
+     "exclusive": true
+    }
+   ]
+  },
+  {
+   "id": "tipos_violencia",
+   "etapa": "Situación de violencia",
+   "type": "multi",
+   "label": "¿Qué tipo de violencia estás atravesando? Podés elegir más de una opción.",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ]
+   },
+   "options": [
+    {
+     "value": "fisica",
+     "label": "Violencia física"
+    },
+    {
+     "value": "psicologica",
+     "label": "Violencia psicológica o emocional"
+    },
+    {
+     "value": "economica",
+     "label": "Violencia económica o patrimonial"
+    },
+    {
+     "value": "sexual",
+     "label": "Violencia sexual"
+    },
+    {
+     "value": "digital",
+     "label": "Violencia digital"
+    },
+    {
+     "value": "amenazas",
+     "label": "Amenazas"
+    },
+    {
+     "value": "control",
+     "label": "Control, aislamiento o persecución"
+    },
+    {
+     "value": "incumplimiento",
+     "label": "Incumplimiento de medida judicial",
+     "indicador": "incumplimiento"
+    },
+    {
+     "value": "otra",
+     "label": "Otra situación"
+    },
+    {
+     "value": "no_sabe",
+     "label": "No sé cómo identificarla"
+    }
+   ]
+  },
+  {
+   "id": "q_fisica",
+   "etapa": "Situación de violencia",
+   "type": "single",
+   "label": "¿Hubo golpes, empujones, forcejeos u otra agresión física?",
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ],
+    "tipos_violencia": [
+     "fisica"
+    ]
+   },
+   "options": [
+    {
+     "value": "si",
+     "label": "Sí"
+    },
+    {
+     "value": "no",
+     "label": "No"
+    },
+    {
+     "value": "nose",
+     "label": "No sé"
+    }
+   ]
+  },
+  {
+   "id": "q_psico",
+   "etapa": "Situación de violencia",
+   "type": "single",
+   "label": "¿Hubo insultos, humillaciones, amenazas, control o intimidación?",
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ],
+    "tipos_violencia": [
+     "psicologica"
+    ]
+   },
+   "options": [
+    {
+     "value": "si",
+     "label": "Sí"
+    },
+    {
+     "value": "no",
+     "label": "No"
+    },
+    {
+     "value": "nose",
+     "label": "No sé"
+    }
+   ]
+  },
+  {
+   "id": "q_economica",
+   "etapa": "Situación de violencia",
+   "type": "single",
+   "label": "¿Te impide acceder a dinero, trabajar, usar bienes o disponer de recursos?",
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ],
+    "tipos_violencia": [
+     "economica"
+    ]
+   },
+   "options": [
+    {
+     "value": "si",
+     "label": "Sí"
+    },
+    {
+     "value": "no",
+     "label": "No"
+    },
+    {
+     "value": "nose",
+     "label": "No sé"
+    }
+   ]
+  },
+  {
+   "id": "q_digital",
+   "etapa": "Situación de violencia",
+   "type": "single",
+   "label": "¿Te controla el celular, redes, contraseñas, ubicación o te hostiga por medios digitales?",
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ],
+    "tipos_violencia": [
+     "digital"
+    ]
+   },
+   "options": [
+    {
+     "value": "si",
+     "label": "Sí"
+    },
+    {
+     "value": "no",
+     "label": "No"
+    },
+    {
+     "value": "nose",
+     "label": "No sé"
+    }
+   ]
+  },
+  {
+   "id": "q_sexual",
+   "etapa": "Situación de violencia",
+   "type": "single",
+   "label": "¿Te obligó o presionó para realizar una conducta sexual que no querías?",
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ],
+    "tipos_violencia": [
+     "sexual"
+    ]
+   },
+   "options": [
+    {
+     "value": "si",
+     "label": "Sí"
+    },
+    {
+     "value": "no",
+     "label": "No"
+    },
+    {
+     "value": "nose",
+     "label": "No sé"
+    }
+   ]
+  },
+  {
+   "id": "atencion_medica",
+   "etapa": "Situación de violencia",
+   "type": "single",
+   "label": "¿Necesitás atención médica en este momento?",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ],
+    "tipos_violencia": [
+     "fisica"
+    ]
+   },
+   "ayuda": "No te pedimos certificados, fotos ni pruebas.",
+   "options": [
+    {
+     "value": "si",
+     "label": "Sí"
+    },
+    {
+     "value": "no",
+     "label": "No"
+    },
+    {
+     "value": "nose",
+     "label": "No sé"
+    }
+   ]
+  },
+  {
+   "id": "otras_situaciones",
+   "etapa": "Antecedentes",
+   "type": "single",
+   "label": "¿Hubo otras situaciones de violencia con esta persona?",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ]
+   },
+   "options": [
+    {
+     "value": "varias",
+     "label": "Sí, varias veces",
+     "indicador": "reiterados"
+    },
+    {
+     "value": "una",
+     "label": "Sí, una vez"
+    },
+    {
+     "value": "no",
+     "label": "No"
+    },
+    {
+     "value": "nose",
+     "label": "No sé"
+    }
+   ]
+  },
+  {
+   "id": "causa_existe",
+   "etapa": "Antecedentes",
+   "type": "single",
+   "label": "¿Ya existe una causa judicial?",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ]
+   },
+   "options": [
+    {
+     "value": "si",
+     "label": "Sí"
+    },
+    {
+     "value": "no",
+     "label": "No"
+    },
+    {
+     "value": "nose",
+     "label": "No sé"
+    }
+   ]
+  },
+  {
+   "id": "causa_datos",
+   "etapa": "Antecedentes",
+   "type": "group",
+   "label": "Datos de la causa anterior",
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ],
+    "causa_existe": [
+     "si"
+    ]
+   },
+   "ayuda": "Todo es opcional. Nos ayuda a que la presentación llegue al juzgado correcto.",
+   "fields": [
+    {
+     "id": "expediente",
+     "type": "text",
+     "label": "Número de expediente, si lo sabés",
+     "maxLength": 60
+    },
+    {
+     "id": "juzgado_previo",
+     "type": "select",
+     "label": "Juzgado anterior, si lo sabés",
+     "options": [
+      {
+       "value": "nose",
+       "label": "No sé"
+      },
+      {
+       "value": "JUZ-DEMO-1",
+       "label": "Juzgado N.º 1 (demo)"
+      },
+      {
+       "value": "JUZ-DEMO-2",
+       "label": "Juzgado N.º 2 (demo)"
+      },
+      {
+       "value": "JUZ-DEMO-3",
+       "label": "Juzgado N.º 3 (demo)"
+      },
+      {
+       "value": "JUZ-DEMO-4",
+       "label": "Juzgado N.º 4 (demo)"
+      },
+      {
+       "value": "JUZ-DEMO-5",
+       "label": "Juzgado N.º 5 (demo)"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "medida_vigente",
+   "etapa": "Antecedentes",
+   "type": "single",
+   "label": "¿Existe alguna medida judicial vigente?",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ]
+   },
+   "options": [
+    {
+     "value": "si",
+     "label": "Sí"
+    },
+    {
+     "value": "no",
+     "label": "No"
+    },
+    {
+     "value": "nose",
+     "label": "No sé"
+    }
+   ]
+  },
+  {
+   "id": "medida_incumplida",
+   "etapa": "Antecedentes",
+   "type": "single",
+   "label": "¿La medida fue incumplida?",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ],
+    "medida_vigente": [
+     "si"
+    ]
+   },
+   "options": [
+    {
+     "value": "si",
+     "label": "Sí",
+     "indicador": "incumplimiento"
+    },
+    {
+     "value": "no",
+     "label": "No"
+    },
+    {
+     "value": "nose",
+     "label": "No sé"
+    }
+   ]
+  },
+  {
+   "id": "gravedad",
+   "etapa": "Prioridad de revisión",
+   "type": "multi",
+   "label": "¿Pasó alguna de estas cosas?",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ]
+   },
+   "ayuda": "Esto ayuda a ordenar la revisión. No es una evaluación de riesgo.",
+   "options": [
+    {
+     "value": "amenazas",
+     "label": "Hubo amenazas",
+     "indicador": "amenazas"
+    },
+    {
+     "value": "amenaza_muerte",
+     "label": "Hubo amenazas de muerte",
+     "indicador": "amenaza_muerte"
+    },
+    {
+     "value": "arma",
+     "label": "Se usó un arma o la otra persona tiene acceso a armas",
+     "indicador": "arma"
+    },
+    {
+     "value": "escalada",
+     "label": "La violencia es cada vez más frecuente o más grave",
+     "indicador": "escalada"
+    },
+    {
+     "value": "ninguna",
+     "label": "Ninguna de estas",
+     "exclusive": true
+    }
+   ]
+  },
+  {
+   "id": "medidas",
+   "etapa": "Medidas de protección",
+   "type": "multi",
+   "label": "¿Necesitás pedir alguna medida de protección o resguardo?",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ]
+   },
+   "ayuda": "El sistema no concede medidas. Tu pedido será evaluado por el juzgado.",
+   "options": [
+    {
+     "value": "acercamiento",
+     "label": "Que no se acerque a mí"
+    },
+    {
+     "value": "domicilio",
+     "label": "Que no se acerque a mi domicilio"
+    },
+    {
+     "value": "trabajo",
+     "label": "Que no se acerque a mi trabajo"
+    },
+    {
+     "value": "comunicacion",
+     "label": "Que no se comunique conmigo"
+    },
+    {
+     "value": "exclusion",
+     "label": "Exclusión del hogar"
+    },
+    {
+     "value": "hijos",
+     "label": "Protección respecto de hijos/as"
+    },
+    {
+     "value": "pertenencias",
+     "label": "Retiro seguro de pertenencias"
+    },
+    {
+     "value": "otra",
+     "label": "Otra medida"
+    },
+    {
+     "value": "no_se",
+     "label": "No sé qué medida necesito",
+     "exclusive": true
+    },
+    {
+     "value": "ninguna",
+     "label": "Ninguna por ahora",
+     "exclusive": true
+    }
+   ]
+  },
+  {
+   "id": "relato_modo",
+   "etapa": "Relato",
+   "type": "single",
+   "label": "¿Querés contar con tus palabras qué ocurrió?",
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ]
+   },
+   "options": [
+    {
+     "value": "escribir",
+     "label": "Sí, quiero escribirlo"
+    },
+    {
+     "value": "seguir",
+     "label": "Prefiero continuar con las preguntas"
+    },
+    {
+     "value": "audio",
+     "label": "Quiero contarlo por audio (función futura)",
+     "disabled": true
+    }
+   ]
+  },
+  {
+   "id": "relato",
+   "etapa": "Relato",
+   "type": "textarea",
+   "label": "Escribí lo que quieras contar",
+   "maxLength": 2000,
+   "showIf": {
+    "entrada": [
+     "nueva",
+     "emergencia"
+    ],
+    "relato_modo": [
+     "escribir"
+    ]
+   },
+   "ayuda": "Tu relato se conserva tal como lo escribas. No se reemplaza por una redacción automática."
+  },
+  {
+   "id": "e_accion",
+   "etapa": "Causa existente",
+   "type": "single",
+   "label": "¿Qué necesitás hacer?",
+   "required": true,
+   "showIf": {
+    "entrada": [
+     "existente"
+    ]
+   },
+   "options": [
+    {
+     "value": "hecho_nuevo",
+     "label": "Informar un hecho nuevo"
+    },
+    {
+     "value": "incumplimiento",
+     "label": "Informar un incumplimiento",
+     "indicador": "incumplimiento"
+    },
+    {
+     "value": "actualizar",
+     "label": "Actualizar mis datos"
+    },
+    {
+     "value": "consulta",
+     "label": "Hacer una consulta vinculada con la causa"
+    }
+   ]
+  },
+  {
+   "id": "e_ident",
+   "etapa": "Causa existente",
+   "type": "group",
+   "label": "Datos para encontrar tu causa",
+   "showIf": {
+    "entrada": [
+     "existente"
+    ]
+   },
+   "ayuda": "No repetimos las demás preguntas personales. En esta demostración usá datos inventados.",
+   "fields": [
+    {
+     "id": "e_dni",
+     "type": "text",
+     "label": "DNI o dato de identificación",
+     "maxLength": 40,
+     "required": true
+    },
+    {
+     "id": "e_expediente",
+     "type": "text",
+     "label": "Código o número de expediente, si lo conocés",
+     "maxLength": 60
+    },
+    {
+     "id": "e_juzgado",
+     "type": "select",
+     "label": "Juzgado, si lo sabés",
+     "options": [
+      {
+       "value": "nose",
+       "label": "No sé"
+      },
+      {
+       "value": "JUZ-DEMO-1",
+       "label": "Juzgado N.º 1 (demo)"
+      },
+      {
+       "value": "JUZ-DEMO-2",
+       "label": "Juzgado N.º 2 (demo)"
+      },
+      {
+       "value": "JUZ-DEMO-3",
+       "label": "Juzgado N.º 3 (demo)"
+      },
+      {
+       "value": "JUZ-DEMO-4",
+       "label": "Juzgado N.º 4 (demo)"
+      },
+      {
+       "value": "JUZ-DEMO-5",
+       "label": "Juzgado N.º 5 (demo)"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "e_hecho",
+   "etapa": "Causa existente",
+   "type": "textarea",
+   "label": "Contanos qué querés informar o consultar",
+   "required": true,
+   "maxLength": 2000,
+   "showIf": {
+    "entrada": [
+     "existente"
+    ],
+    "e_accion": [
+     "hecho_nuevo",
+     "incumplimiento",
+     "consulta"
+    ]
+   }
+  },
+  {
+   "id": "e_gravedad",
+   "etapa": "Causa existente",
+   "type": "multi",
+   "label": "¿Pasó alguna de estas cosas?",
+   "showIf": {
+    "entrada": [
+     "existente"
+    ],
+    "e_accion": [
+     "hecho_nuevo",
+     "incumplimiento"
+    ]
+   },
+   "ayuda": "Opcional. Ayuda a ordenar la revisión.",
+   "options": [
+    {
+     "value": "amenazas",
+     "label": "Hubo amenazas",
+     "indicador": "amenazas"
+    },
+    {
+     "value": "amenaza_muerte",
+     "label": "Hubo amenazas de muerte",
+     "indicador": "amenaza_muerte"
+    },
+    {
+     "value": "arma",
+     "label": "Se usó un arma o la otra persona tiene acceso a armas",
+     "indicador": "arma"
+    },
+    {
+     "value": "escalada",
+     "label": "La violencia es cada vez más frecuente o más grave",
+     "indicador": "escalada"
+    },
+    {
+     "value": "ninguna",
+     "label": "Ninguna de estas",
+     "exclusive": true
+    }
+   ]
+  },
+  {
+   "id": "e_medidas",
+   "etapa": "Causa existente",
+   "type": "multi",
+   "label": "¿Necesitás pedir alguna medida de protección o resguardo?",
+   "showIf": {
+    "entrada": [
+     "existente"
+    ],
+    "e_accion": [
+     "hecho_nuevo",
+     "incumplimiento"
+    ]
+   },
+   "ayuda": "El sistema no concede medidas. Tu pedido será evaluado por el juzgado.",
+   "options": [
+    {
+     "value": "acercamiento",
+     "label": "Que no se acerque a mí"
+    },
+    {
+     "value": "domicilio",
+     "label": "Que no se acerque a mi domicilio"
+    },
+    {
+     "value": "trabajo",
+     "label": "Que no se acerque a mi trabajo"
+    },
+    {
+     "value": "comunicacion",
+     "label": "Que no se comunique conmigo"
+    },
+    {
+     "value": "exclusion",
+     "label": "Exclusión del hogar"
+    },
+    {
+     "value": "hijos",
+     "label": "Protección respecto de hijos/as"
+    },
+    {
+     "value": "pertenencias",
+     "label": "Retiro seguro de pertenencias"
+    },
+    {
+     "value": "otra",
+     "label": "Otra medida"
+    },
+    {
+     "value": "no_se",
+     "label": "No sé qué medida necesito",
+     "exclusive": true
+    },
+    {
+     "value": "ninguna",
+     "label": "Ninguna por ahora",
+     "exclusive": true
+    }
+   ]
+  },
+  {
+   "id": "e_datos",
+   "etapa": "Causa existente",
+   "type": "group",
+   "label": "Tus datos actualizados",
+   "showIf": {
+    "entrada": [
+     "existente"
+    ],
+    "e_accion": [
+     "actualizar"
+    ]
+   },
+   "fields": [
+    {
+     "id": "e_telefono",
+     "type": "text",
+     "label": "Nuevo teléfono",
+     "maxLength": 40
+    },
+    {
+     "id": "e_domicilio",
+     "type": "text",
+     "label": "Nuevo domicilio",
+     "maxLength": 120
+    },
+    {
+     "id": "e_seguro",
+     "type": "select",
+     "label": "¿Es seguro que nos comuniquemos con vos a ese número?",
+     "options": [
+      {
+       "value": "si",
+       "label": "Sí"
+      },
+      {
+       "value": "no",
+       "label": "No"
+      },
+      {
+       "value": "otro",
+       "label": "Prefiero otro medio"
+      }
+     ]
+    }
+   ]
+  }
+ ]
 }

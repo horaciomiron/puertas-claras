@@ -1,11 +1,13 @@
-# Puertas Claras v.1
+# Puertas Claras v.2
 
 > Prototipo académico (PIL 2026) · **Datos 100 % ficticios.** No constituye una presentación judicial ni genera un expediente.
 
-Aplicación web de orientación y acceso a la Justicia para personas en situación de exclusión.
-La persona responde una **entrevista guiada** en lenguaje claro y el sistema arma un **legajo inteligente** (resumen ordenado de su situación y pedido) que se **deriva** al área que corresponde. El personal de la OGU lo recibe, revisa, cambia el estado y gestiona desde un **panel**.
+Aplicación web de acceso a la Justicia, **limitada a violencia familiar y de género** (OGU).
+La persona responde una **entrevista guiada** (denuncia nueva, causa existente o emergencia) en lenguaje claro y el sistema arma un **legajo inteligente** (resumen ordenado de su situación y pedido) que se **deriva** al área que corresponde. El personal de la OGU lo recibe, revisa, cambia el estado y gestiona desde un **panel**.
 
 La herramienta organiza y destaca; **la evaluación y la decisión son siempre humanas**. Toda derivación requiere validación de una persona.
+
+> Cambios de la v2: ver `docs/cambios-v2.md`.
 
 ## Estructura
 ```

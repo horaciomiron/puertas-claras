@@ -1,33 +1,29 @@
 {
-  "aviso": "Reglas de DEMOSTRACIÓN. Cada jurisdicción debe cargar sus competencias oficiales. Toda derivación requiere validación humana.",
-  "porDefecto": "ORG-DEMO-09",
+  "aviso": "Reglas de DEMOSTRACIÓN (turnos y juzgados ficticios). La jurisdicción debe cargar sus reglas oficiales. Toda derivación requiere validación humana.",
+  "turnos": {
+    "zona": "America/Argentina/Buenos_Aires",
+    "descripcion": "Turno por día del mes de ingreso (regla ficticia de demostración)",
+    "rangos": [
+      { "hastaDia": 6, "juzgado": "JUZ-DEMO-1" }, { "hastaDia": 12, "juzgado": "JUZ-DEMO-2" },
+      { "hastaDia": 18, "juzgado": "JUZ-DEMO-3" }, { "hastaDia": 24, "juzgado": "JUZ-DEMO-4" }, { "hastaDia": 31, "juzgado": "JUZ-DEMO-5" }
+    ]
+  },
   "prioridad": {
     "inmediata": ["peligro_inmediato"],
-    "prioritaria": ["amenaza_muerte", "arma", "incumplimiento", "escalada", "ninez", "embarazo", "discapacidad", "adulta_mayor"]
+    "prioritaria": ["amenaza_muerte", "arma", "incumplimiento", "escalada", "reiterados", "ninez", "embarazo", "discapacidad", "adulta_mayor", "salud_grave"]
   },
   "etiquetasIndicadores": {
-    "peligro_inmediato": "Peligro inmediato informado",
+    "peligro_inmediato": "Violencia actual o peligro inmediato",
+    "amenazas": "Amenazas",
     "amenaza_muerte": "Amenazas de muerte",
     "arma": "Arma involucrada o accesible",
-    "incumplimiento": "Posible incumplimiento de medida",
-    "escalada": "Violencia más frecuente o grave",
-    "ninez": "Niñez o adolescencia involucrada",
+    "incumplimiento": "Incumplimiento de medida",
+    "escalada": "Escalada de la violencia",
+    "reiterados": "Antecedentes reiterados",
+    "ninez": "Niños/as o adolescentes involucrados",
     "embarazo": "Embarazo",
     "discapacidad": "Persona con discapacidad",
-    "adulta_mayor": "Persona adulta mayor"
-  },
-  "materias": {
-    "violencia": ["ORG-DEMO-01", "ORG-DEMO-02"],
-    "familia_ninez": ["ORG-DEMO-03", "ORG-DEMO-01"],
-    "vivienda": ["ORG-DEMO-04"],
-    "trabajo": ["ORG-DEMO-05"],
-    "salud": ["ORG-DEMO-06"],
-    "discapacidad": ["ORG-DEMO-06"],
-    "consumo": ["ORG-DEMO-07"],
-    "vecinal": ["ORG-DEMO-07"],
-    "penal": ["ORG-DEMO-08"],
-    "administrativo": ["ORG-DEMO-09"],
-    "otra": ["ORG-DEMO-09"],
-    "no_se": ["ORG-DEMO-09"]
+    "adulta_mayor": "Persona adulta mayor",
+    "salud_grave": "Problema grave de salud"
   }
 }

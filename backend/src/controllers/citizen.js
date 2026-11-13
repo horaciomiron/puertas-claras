@@ -48,12 +48,13 @@ export const citizenController = ({ repo, config }) => ({
   submit: async (req, res) => {
     if (req.body?.consentimiento !== true) throw new HttpError(400, 'Tenés que aceptar el aviso de privacidad para enviar.');
     const answers = validateAnswers(config.interview, req.body?.answers);
-    const built = buildLegajo(answers, config);
+    const ahora = new Date();
+    const built = buildLegajo(answers, config, ahora);
     const codigoSeguimiento = makeCode('SEG');
-    const now = new Date().toISOString();
+    const now = ahora.toISOString();
     const legajo = await repo.insertWith('legajos', (all) => ({
       id: `LEG-${String(all.length + 1).padStart(4, '0')}`,
-      codigoSeguimiento, creadoEn: now, origen: 'prueba', ...built,
+      esquema: 2, codigoSeguimiento, creadoEn: now, origen: 'prueba', ...built,
       estado: 'recibido', responsable: null, resultado: null, primeraRespuestaEn: null,
       historial: [{ en: now, quien: 'Sistema', accion: 'Presentación recibida' }],
     }));
