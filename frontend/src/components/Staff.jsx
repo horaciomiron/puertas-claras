@@ -29,7 +29,7 @@ function Detail({ id, token, cat, onChanged }) {
   const org = cat.organismos.find((o) => o.id === f.organismoId);
 
   return (
-    <div className="card detail" aria-live="polite">
+    <div className="card detail" id="detalle-legajo" tabIndex={-1} aria-live="polite">
       <div className="detail-head"><div><span className="eyebrow">{l.id} · {l.origen === 'demo' ? 'Caso ficticio de demostración' : 'Generado en pruebas'} · Ingreso {fmt(l.creadoEn)}</span><h3>{l.entradaLabel}</h3></div>
         <span className="status-chip">{cat.estados[l.estado].label}</span></div>
       <p>{l.resumen}</p>
@@ -144,7 +144,7 @@ export default function Staff() {
             {rows.map((r) => <tr key={r.id} className={sel === r.id ? 'sel' : ''}><td>{fmt(r.creadoEn)}</td><td>{r.id}{r.origen === 'demo' && <div className="small">demo</div>}</td><td>{r.entradaLabel}</td>
               <td><Pill tone={prioTone(r.prioridad.key)}>{r.prioridad.label}</Pill></td><td className="small">{r.tipos.join(', ') || '—'}</td><td className="small">{r.medidas.length ? r.medidas.join(', ') : '—'}</td><td>{r.antecedente ? 'Sí' : 'No'}</td>
               <td className="small">{r.juzgado}</td><td>{r.responsable || <span className="small">Sin asignar</span>}</td><td>{r.estadoLabel}</td>
-              <td><button className="btn compact" onClick={() => setSel(r.id)} aria-label={`Abrir legajo ${r.id}`}>Abrir</button></td></tr>)}</tbody></table></div>
+              <td><button className="btn compact" onClick={() => { setSel(r.id); setTimeout(() => { const el = document.getElementById('detalle-legajo'); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); el.focus({ preventScroll: true }); } }, 350); }} aria-label={`Abrir legajo ${r.id}`}>Abrir</button></td></tr>)}</tbody></table></div>
         {sel && <Detail id={sel} token={auth.token} cat={cat} onChanged={load} />}</>}
     </div>);
 }

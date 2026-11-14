@@ -61,3 +61,10 @@ code{background:#f1ede2;padding:1px 6px;border-radius:6px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 
 .choice.off{opacity:.55;cursor:not-allowed}.mailcard{background:#fffdf8;border:1px solid #dfd7c7;border-radius:13px;padding:14px;margin-top:12px;white-space:pre-line}.blk{margin:14px 0}.blk h4{margin:0 0 6px;color:var(--forest)}.relato{white-space:pre-wrap;background:var(--mint);border:1px solid var(--line);border-radius:10px;padding:12px}.sin{border:2px solid #c9b27d;background:#fffaf0}
+
+.brand p.alcance{font-size:1.15rem;font-weight:700;color:#fff;margin-top:6px}
+@media(max-width:640px){.brand p.alcance{font-size:1rem}}
+.assignee-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.assignee-tab{border:1px solid #b9c9bd;background:#fff;color:var(--forest);padding:10px 16px;border-radius:999px;font-weight:700;cursor:pointer;min-height:44px;font:inherit}
+.assignee-tab:hover{background:var(--mint);border-color:var(--sage)}
+.assignee-tab.active{background:var(--forest);color:#fff;border-color:var(--forest)}

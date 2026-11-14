@@ -16,7 +16,7 @@ export default function App() {
       <div className="app"><div className="shell">
         <header className="top">
           <div className="brand"><div className="logo"><Logo /></div>
-            <div><h1>Puertas Claras <span className="ver">v.1</span></h1><p>Acceso a la Justicia · Violencia familiar y de género</p></div></div>
+            <div><h1>Puertas Claras <span className="ver">v.2</span></h1><p className="alcance">Acceso a la Justicia · Violencia familiar y de género</p></div></div>
           <div className="top-tools">
             <div className="tagline">La Justicia empieza por poder entrar.</div>
             <div className="fontbtns" role="group" aria-label="Tamaño del texto">
@@ -46,7 +46,7 @@ export default function App() {
           {view === 'citizen' && <Citizen />}
           {view === 'staff' && <Staff />}
         </main>
-        <footer className="footer">Puertas Claras v.1 · Prototipo académico. La priorización es operativa y explicable; toda derivación requiere validación humana. Datos 100 % ficticios.</footer>
+        <footer className="footer">Puertas Claras v.2 · Prototipo académico. La priorización es operativa y explicable; toda derivación requiere validación humana. Datos 100 % ficticios.</footer>
       </div></div>
     </>
   );

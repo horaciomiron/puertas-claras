@@ -1,5 +1,5 @@
 # Cómo se refleja las Reglas de Brasilia (2008)
-| Regla / idea | En Puertas Claras v.1 |
+| Regla / idea | En Puertas Claras v.2 |
 |---|---|
 | Acceso para personas en condición de vulnerabilidad (edad, discapacidad, victimización, migración, pobreza, género, etc.) | Preguntas sobre niñez, embarazo, discapacidad, persona adulta mayor y barreras de acceso; indicadores de atención prioritaria (sin diagnosticar). |
 | Cultura jurídica / información clara | Lenguaje simple, una pregunta por pantalla, ayuda breve; la persona no necesita conocer el sistema ni clasificar su problema ("No sé cómo clasificarlo"). |

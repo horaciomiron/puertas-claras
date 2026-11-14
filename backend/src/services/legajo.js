@@ -86,7 +86,7 @@ export function buildLegajo(answers, config, fecha = new Date()) {
     relato: answers.relato || answers.e_hecho || null,
     bloques: { datosBasicos, situacion, notificacion },
     resumen: `${existente ? 'Causa existente' : 'Denuncia nueva por violencia familiar o de género'}. ${existente ? 'Necesita' : 'Tipos'}: ${tipos.join(', ') || 'sin especificar'}. ` +
-      `Medidas solicitadas: ${medidas.length}. Prioridad de revisión: ${prioridad.label} (orientativa, no es una evaluación de riesgo).`,
+      `Medidas solicitadas: ${medidas.join(', ') || 'ninguna'}. Prioridad de revisión: ${prioridad.label} (orientativa, no es una evaluación de riesgo).`,
   };
 }
 
