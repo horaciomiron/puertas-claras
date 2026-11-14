@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import Citizen from './components/Citizen.jsx';
 import Staff from './components/Staff.jsx';
+import Chat from './components/Chat.jsx';
 import { Logo } from './components/ui.jsx';
 
 export default function App() {
-  const [view, setView] = useState('landing'); // landing | citizen | staff
+  const [view, setView] = useState('landing'); // landing | citizen | chat | staff
   const [size, setSize] = useState(100);
+  const [prefill, setPrefill] = useState(null); // respuestas del asistente conversacional
   const main = useRef(null);
   useEffect(() => { document.documentElement.style.fontSize = `${size}%`; }, [size]);
   useEffect(() => { main.current?.focus(); window.scrollTo(0, 0); }, [view]);
@@ -29,6 +31,7 @@ export default function App() {
         <nav className="tabs" aria-label="Secciones">
           <button className={'tab' + (view === 'landing' ? ' active' : '')} onClick={() => setView('landing')} aria-current={view === 'landing' ? 'page' : undefined}>Inicio</button>
           <button className={'tab' + (view === 'citizen' ? ' active' : '')} onClick={() => setView('citizen')} aria-current={view === 'citizen' ? 'page' : undefined}>Acceso ciudadano</button>
+          <button className={'tab' + (view === 'chat' ? ' active' : '')} onClick={() => setView('chat')} aria-current={view === 'chat' ? 'page' : undefined}>Asistente (prueba)</button>
           <button className={'tab' + (view === 'staff' ? ' active' : '')} onClick={() => setView('staff')} aria-current={view === 'staff' ? 'page' : undefined}>Acceso operador/a</button>
         </nav>
         <main id="contenido" className="main" tabIndex={-1} ref={main}>
@@ -43,7 +46,8 @@ export default function App() {
               </div>
             </div></section>
           )}
-          {view === 'citizen' && <Citizen />}
+          {view === 'citizen' && <Citizen prefill={prefill} onConsumed={() => setPrefill(null)} />}
+          {view === 'chat' && <Chat onFinish={(a) => { setPrefill(a); setView('citizen'); }} />}
           {view === 'staff' && <Staff />}
         </main>
         <footer className="footer">Puertas Claras v.2 · Prototipo académico. La priorización es operativa y explicable; toda derivación requiere validación humana. Datos 100 % ficticios.</footer>

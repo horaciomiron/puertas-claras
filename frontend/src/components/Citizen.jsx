@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { api, isVisible } from '../api.js';
 import { Pill, prioTone, fmt } from './ui.jsx';
 
-function Emergency({ data, onContinue }) {
+export function Emergency({ data, onContinue }) {
   return (
     <div className="emergency" role="alert">
       <h3>{data.titulo}</h3>
@@ -48,6 +48,13 @@ function Interview({ session, def, initial, onDone, onExit }) {
   const [busy, setBusy] = useState(false);
   const [saved, setSaved] = useState(false);
   const head = useRef(null);
+
+  useEffect(() => { // viene del asistente conversacional: ir directo a la revisión
+    if (!initial.reviewNow) return;
+    setBusy(true);
+    api('/legajo/vista-previa', { method: 'POST', token: session.token, body: { answers } }).then(setReview).catch((e) => setErrors(e.message)).finally(() => setBusy(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const steps = def.steps.filter((s) => isVisible(s, answers));
   const step = steps[Math.min(pos, steps.length - 1)];
@@ -139,7 +146,7 @@ function Interview({ session, def, initial, onDone, onExit }) {
   );
 }
 
-export default function Citizen() {
+export default function Citizen({ prefill, onConsumed }) {
   const [def, setDef] = useState(null);
   const [session, setSession] = useState(null);
   const [mode, setMode] = useState('home'); // home | interview | done | exited
@@ -149,11 +156,17 @@ export default function Citizen() {
   const [exitCode, setExitCode] = useState('');
 
   useEffect(() => { api('/entrevista').then(setDef).catch((e) => setErr(e.message)); }, []);
-  const enter = async (codigo) => {
+  const enter = async (codigo, answers) => {
     setErr('');
-    try { const s = await api('/auth/ciudadania', { method: 'POST', body: codigo ? { codigo } : {} }); setSession(s); setMode('interview'); }
-    catch (e) { setErr(e.message); }
+    try {
+      const s = await api('/auth/ciudadania', { method: 'POST', body: codigo ? { codigo } : {} });
+      setSession(answers ? { ...s, borrador: { ...(s.borrador || {}), answers, reviewNow: true } } : s); setMode('interview');
+    } catch (e) { setErr(e.message); }
   };
+  useEffect(() => { // respuestas que llegan desde el asistente conversacional
+    if (def && prefill) { enter(null, prefill); onConsumed?.(); }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [def]);
 
   if (!def) return <div role="status">{err ? <div className="err">{err}</div> : 'Cargando…'}</div>;
 

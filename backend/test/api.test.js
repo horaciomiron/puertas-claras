@@ -102,3 +102,52 @@ test('asignar responsable prepara correo y causa existente no pide datos persona
   assert.equal(ex.status, 200);
   assert.equal(ex.body.prioridad.key, 'prioritaria');
 });
+test('chat: reglas de respaldo en TODA la entrevista, validación y límites', async () => {
+  const p = await api('/chat/pasos');
+  assert.equal(p.status, 200); assert.equal(p.body.modo, 'reglas');
+  const t = (paso, texto) => api('/chat/turno', { method: 'POST', body: { paso, texto } });
+  const v = async (paso, texto) => (await t(paso, texto)).body.valores.slice().sort();
+  assert.deepEqual(await v('entrada', 'quiero hacer una denuncia nueva'), ['nueva']);
+  assert.deepEqual(await v('entrada', 'ya tengo una causa en el juzgado'), ['existente']);
+  assert.deepEqual(await v('urgencia', 'fue ayer'), ['no']);
+  assert.deepEqual(await v('afectada', 'le pega a mi hermana'), ['otra']);
+  assert.deepEqual(await v('afectada_tipo', 'es mi hijo chiquito'), ['nna']);
+  assert.deepEqual(await v('seguro', 'mejor por mail'), ['otro']);
+  assert.deepEqual(await v('d_vinculo', 'mi ex'), ['expareja']);
+  assert.deepEqual(await v('d_convivencia', 'a veces'), ['aveces']);
+  assert.deepEqual(await v('ninos', 'tengo dos hijos chicos'), ['si']);
+  assert.deepEqual(await v('vulnerabilidades', 'estoy embarazada'), ['embarazo']);
+  assert.deepEqual(await v('vulnerabilidades', 'ninguna'), ['ninguna']);
+  assert.deepEqual(await v('barreras', 'tengo miedo y no tengo internet'), ['conectividad', 'miedo']);
+  assert.deepEqual(await v('tipos_violencia', 'me insulta, me controla el celular y me pega'), ['control', 'digital', 'fisica', 'psicologica']);
+  assert.deepEqual(await v('q_fisica', 'si, me empujo'), ['si']);
+  assert.deepEqual(await v('atencion_medica', 'no'), ['no']);
+  assert.deepEqual(await v('otras_situaciones', 'pasa siempre'), ['varias']);
+  assert.deepEqual(await v('causa_existe', 'no se'), ['nose']);
+  assert.deepEqual(await v('juzgado_previo', 'el juzgado 3'), ['JUZ-DEMO-3']);
+  assert.deepEqual(await v('medida_vigente', 'si'), ['si']);
+  assert.deepEqual(await v('gravedad', 'me amenazo de muerte y tiene un arma'.replace('tiene un arma', 'usa pistola')), ['amenaza_muerte', 'amenazas', 'arma']);
+  assert.deepEqual(await v('gravedad', 'no hubo nada de eso'), ['ninguna']);
+  assert.deepEqual(await v('medidas', 'que no se acerque y que no me llame'), ['acercamiento', 'comunicacion']);
+  assert.deepEqual(await v('relato_modo', 'prefiero seguir con las preguntas'), ['seguir']);
+  assert.deepEqual(await v('e_accion', 'se acerco, incumplio la medida'), ['incumplimiento']);
+  assert.equal((await t('afectada', 'blablabla')).body.entendido, false);
+  assert.equal((await t('entrada', 'me va a matar, está acá')).body.emergencia, true);
+  assert.equal((await t('nombre', 'Maria')).status, 400); // texto libre: nunca se interpreta (ni va a IA)
+  assert.equal((await t('inexistente', 'hola')).status, 400);
+  assert.equal((await t('entrada', '')).status, 400);
+  assert.equal((await t('entrada', 'x'.repeat(501))).status, 400);
+});
+test('chat con IA: descarta valores inventados, respeta excluyentes y la emergencia no pasa por la IA', async () => {
+  const { interpretar } = await import('../src/services/chat.js');
+  const env = { GEMINI_API_KEY: 'fake' };
+  const r = await interpretar({ pasoId: 'tipos_violencia', texto: 'me golpea', config, env, ia: async () => ['fisica', 'inventado'] });
+  assert.deepEqual(r.valores, ['fisica']); assert.equal(r.via, 'ia');
+  const x = await interpretar({ pasoId: 'gravedad', texto: 'x', config, env, ia: async () => ['ninguna', 'arma'] });
+  assert.deepEqual(x.valores, ['arma']); // "ninguna" no convive con otras
+  let llamada = false;
+  const e = await interpretar({ pasoId: 'urgencia', texto: 'socorro, me va a matar', config, env, ia: async () => { llamada = true; return ['no']; } });
+  assert.equal(e.emergencia, true); assert.equal(llamada, false);
+  const f = await interpretar({ pasoId: 'ninos', texto: 'tengo una hija', config, env, ia: async () => { throw new Error('caída'); } });
+  assert.deepEqual(f.valores, ['si']); assert.equal(f.via, 'reglas');
+});

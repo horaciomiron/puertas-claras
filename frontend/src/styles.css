@@ -68,3 +68,13 @@ code{background:#f1ede2;padding:1px 6px;border-radius:6px}
 .assignee-tab{border:1px solid #b9c9bd;background:#fff;color:var(--forest);padding:10px 16px;border-radius:999px;font-weight:700;cursor:pointer;min-height:44px;font:inherit}
 .assignee-tab:hover{background:var(--mint);border-color:var(--sage)}
 .assignee-tab.active{background:var(--forest);color:#fff;border-color:var(--forest)}
+.chatlog{display:flex;flex-direction:column;gap:10px;margin:12px 0;min-height:200px}
+.bubble{padding:12px 14px;border-radius:14px;line-height:1.5;max-width:92%}
+.bubble.bot{background:var(--mist);align-self:flex-start;border:1px solid #d8e8dc}
+.bubble.yo{background:#d9eadf;align-self:flex-end}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.chatform{display:flex;gap:10px;margin:10px 0}.chatform input{flex:1;padding:12px;border:1px solid #b9c9bd;border-radius:12px;font:inherit;min-height:44px}
+.options-chat{display:grid;gap:8px;margin:10px 0}
+.linkbtn{background:none;border:0;color:var(--forest);text-decoration:underline;cursor:pointer;font:inherit;padding:8px 0;min-height:44px}
+.bubble.smallb{font-size:.85rem;color:var(--muted)}
+.chatform textarea{flex:1;padding:12px;border:1px solid #b9c9bd;border-radius:12px;font:inherit}
