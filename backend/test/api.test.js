@@ -170,5 +170,5 @@ test('Clara: explicaciones de respaldo, emergencia, límites y IA simulada', asy
   const e2 = await responder({ pasoId: 'medidas', mensaje: 'socorro', config, env, ia: async () => { llamada = true; return 'x'; } });
   assert.equal(e2.emergencia, true); assert.equal(llamada, false);
   const caida = await responder({ pasoId: 'medidas', mensaje: 'explicame', config, env, ia: async () => { throw new Error('caída'); } });
-  assert.equal(caida.via, 'reglas'); assert.ok(caida.respuesta.length > 20);
+  assert.equal(caida.via, 'reglas'); assert.ok(caida.respuesta.length > 20); assert.match(caida.motivo, /caída/); assert.ok(!JSON.stringify(caida).includes('fake'));
 });

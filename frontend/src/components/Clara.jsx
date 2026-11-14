@@ -47,7 +47,7 @@ export default function Clara({ ctx }) {
     if (m) setMsgs((x) => [...x, { de: 'yo', t: m }]); setTexto(''); setBusy(true);
     try {
       const r = await api('/ayuda', { method: 'POST', body: { paso, mensaje: m } });
-      setMsgs((x) => [...x, { de: 'bot', t: r.respuesta, em: r.emergencia }]);
+      setMsgs((x) => [...x, { de: 'bot', t: r.respuesta, em: r.emergencia, nota: r.motivo ? `Respuesta guía: la IA no respondió (${r.motivo})` : '' }]);
     } catch (e) { setMsgs((x) => [...x, { de: 'bot', t: e.message || 'No pude responder ahora. Probá de nuevo en un momento.' }]); }
     finally { setBusy(false); }
   };
@@ -66,6 +66,7 @@ export default function Clara({ ctx }) {
             {msgs.map((m, k) => (
               <div key={k} className={'bubble ' + m.de + (m.em ? ' clara-em' : '')}>
                 {m.t.split('\n').map((l, i) => <p key={i} style={{ margin: i ? '8px 0 0' : 0 }}>{l}</p>)}
+                {m.nota && <p className="small" style={{ margin: '8px 0 0' }}>{m.nota}</p>}
                 {m.em && <p style={{ margin: '8px 0 0' }}><a className="btn primary" href="tel:911">Llamar al 911</a> <a className="btn secondary" href="tel:144">Llamar al 144</a></p>}
               </div>
             ))}

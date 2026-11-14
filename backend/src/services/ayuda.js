@@ -81,10 +81,10 @@ async function conIA(paso, mensaje, env) {
     body: JSON.stringify({
       systemInstruction: { parts: [{ text: instruccion }] },
       contents: [{ role: 'user', parts: [{ text: `PREGUNTA ACTUAL DEL FORMULARIO: ${paso.label}\nAYUDA OFICIAL: ${paso.ayuda || '(sin texto adicional)'}\nMENSAJE DE LA PERSONA:\n"""${mensaje}"""` }] }],
-      generationConfig: { temperature: 0.3, maxOutputTokens: 400 },
+      generationConfig: { temperature: 0.3, maxOutputTokens: 2048 },
     }),
   });
-  if (!r.ok) throw new Error(`IA ${r.status}`);
+  if (!r.ok) { const cuerpo = (await r.text().catch(() => '')).replace(/\s+/g, ' ').slice(0, 160); throw new Error(`IA ${r.status} ${cuerpo}`.trim()); }
   const data = await r.json();
   const t = data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join('').trim();
   if (!t) throw new Error('vacío');
@@ -103,7 +103,8 @@ export async function responder({ pasoId, mensaje = '', config, env = process.en
   const paso = buscarPaso(config, pasoId);
   if (EMERGENCIA.test(mensaje)) return { respuesta: TEXTO_EMERGENCIA, emergencia: true, via: 'reglas' };
   if (env.GEMINI_API_KEY && mensaje.trim()) {
-    try { return { respuesta: await ia(paso, mensaje, env), emergencia: false, via: 'ia' }; } catch { /* respaldo */ }
+    try { return { respuesta: await ia(paso, mensaje, env), emergencia: false, via: 'ia' }; }
+    catch (e) { return { respuesta: porReglas(paso, mensaje), emergencia: false, via: 'reglas', motivo: String(e.message || 'error').slice(0, 200) }; } // diagnóstico: nunca incluye la clave
   }
   return { respuesta: porReglas(paso, mensaje), emergencia: false, via: 'reglas' };
 }
