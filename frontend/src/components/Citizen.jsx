@@ -37,7 +37,7 @@ function Tracking() {
   );
 }
 
-function Interview({ session, def, initial, onDone, onExit }) {
+function Interview({ session, def, initial, onDone, onExit, onStep }) {
   const [answers, setAnswers] = useState(initial.answers || {});
   const [pos, setPos] = useState(0);
   const [errors, setErrors] = useState('');
@@ -59,6 +59,8 @@ function Interview({ session, def, initial, onDone, onExit }) {
   const steps = def.steps.filter((s) => isVisible(s, answers));
   const step = steps[Math.min(pos, steps.length - 1)];
   const at = step.fields || [step];
+  useEffect(() => { onStep?.({ id: review ? 'revision' : step.id }); }, [step.id, review]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => () => onStep?.(null), []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { head.current?.focus(); }, [pos, review]);
 
   const save = useCallback(async (a, p) => { try { await api('/borrador', { method: 'PUT', token: session.token, body: { answers: a, paso: p } }); setSaved(true); } catch { /* borrador es opcional */ } }, [session.token]);
@@ -146,7 +148,7 @@ function Interview({ session, def, initial, onDone, onExit }) {
   );
 }
 
-export default function Citizen({ prefill, onConsumed }) {
+export default function Citizen({ prefill, onConsumed, onStep }) {
   const [def, setDef] = useState(null);
   const [session, setSession] = useState(null);
   const [mode, setMode] = useState('home'); // home | interview | done | exited
@@ -171,7 +173,7 @@ export default function Citizen({ prefill, onConsumed }) {
   if (!def) return <div role="status">{err ? <div className="err">{err}</div> : 'Cargando…'}</div>;
 
   if (mode === 'interview')
-    return <Interview session={session} def={def} initial={session.borrador} onDone={(r) => { setDone(r); setMode('done'); }}
+    return <Interview onStep={onStep} session={session} def={def} initial={session.borrador} onDone={(r) => { setDone(r); setMode('done'); }}
       onExit={(deleted) => { setExitCode(deleted ? '' : session.codigo); setMode('exited'); }} />;
 
   if (mode === 'exited') return (

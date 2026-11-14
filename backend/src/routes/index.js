@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { citizenController } from '../controllers/citizen.js';
 import { staffController } from '../controllers/staff.js';
 import { chatController } from '../controllers/chat.js';
+import { ayudaController } from '../controllers/ayuda.js';
 import { requireRole, rateLimit } from '../middleware/auth.js';
 
 // Express 4 no captura promesas rechazadas: se envuelve cada handler.
@@ -12,6 +13,7 @@ export function buildRoutes(ctx) {
   const c = citizenController(ctx);
   const s = staffController(ctx);
   const ch = chatController(ctx);
+  const ay = ayudaController(ctx);
   const cit = requireRole('ciudadania');
   const op = requireRole('operador');
   r.use(rateLimit());
@@ -21,6 +23,9 @@ export function buildRoutes(ctx) {
 
   r.get('/chat/pasos', wrap(ch.pasos));
   r.post('/chat/turno', rateLimit(40), wrap(ch.turno));
+
+  r.get('/ayuda', wrap(ay.info));
+  r.post('/ayuda', rateLimit(30), wrap(ay.preguntar));
 
   r.post('/auth/ciudadania', wrap(c.login));
   r.post('/auth/operador', rateLimit(20), wrap(s.login));

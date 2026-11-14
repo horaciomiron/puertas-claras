@@ -78,3 +78,35 @@ code{background:#f1ede2;padding:1px 6px;border-radius:6px}
 .linkbtn{background:none;border:0;color:var(--forest);text-decoration:underline;cursor:pointer;font:inherit;padding:8px 0;min-height:44px}
 .bubble.smallb{font-size:.85rem;color:var(--muted)}
 .chatform textarea{flex:1;padding:12px;border:1px solid #b9c9bd;border-radius:12px;font:inherit}
+
+/* ---- Clara: asistente acompañante ---- */
+.clara{position:fixed;right:16px;bottom:16px;z-index:50;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.clara-fab{position:relative;background:#fff;border:3px solid var(--forest);border-radius:50%;width:84px;height:84px;padding:0;cursor:pointer;display:grid;place-items:center;box-shadow:0 10px 28px rgba(31,77,58,.35);animation:clara-bob 3.2s ease-in-out infinite}
+.clara-fab:hover{transform:scale(1.06)}
+.clara-fab:focus-visible{outline:4px solid #f0b429;outline-offset:3px}
+.clara-globo{position:absolute;right:92px;top:12px;background:#fff;border:2px solid var(--forest);border-radius:14px;padding:6px 10px;font-weight:700;font-size:.85rem;color:var(--forest);white-space:nowrap;box-shadow:0 6px 16px rgba(31,77,58,.2);animation:clara-globo 6s ease-in-out infinite}
+.clara-globo::after{content:"";position:absolute;right:-8px;top:50%;margin-top:-6px;border:6px solid transparent;border-left:8px solid var(--forest)}
+.clara-svg{display:block}
+.clara-body{transform-origin:40px 70px;animation:clara-body 3.2s ease-in-out infinite}
+.clara-eyes{transform-origin:40px 38px;animation:clara-blink 4.5s infinite}
+.clara-arm{transform-origin:60px 40px;animation:clara-wave 2.4s ease-in-out infinite}
+@keyframes clara-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes clara-body{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
+@keyframes clara-blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes clara-wave{0%,60%,100%{transform:rotate(0)}70%{transform:rotate(-18deg)}80%{transform:rotate(8deg)}90%{transform:rotate(-14deg)}}
+@keyframes clara-globo{0%,8%{opacity:0;transform:translateX(8px)}14%,70%{opacity:1;transform:none}80%,100%{opacity:0;transform:translateX(8px)}}
+@media (prefers-reduced-motion:reduce){.clara-fab,.clara-body,.clara-eyes,.clara-arm,.clara-globo{animation:none}.clara-globo{opacity:1}}
+.clara-panel{width:min(370px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 150px));background:#fffdf9;border:2px solid var(--forest);border-radius:18px;box-shadow:0 18px 44px rgba(0,0,0,.28);display:flex;flex-direction:column;overflow:hidden}
+.clara-head{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#173d2f,#1f4d3a);color:#fff;padding:10px 12px}
+.clara-head .small{color:#dbe8df}.clara-head>div{flex:1}
+.clara-x{background:rgba(255,255,255,.15);border:0;color:#fff;border-radius:10px;width:44px;height:44px;font-size:1.1rem;cursor:pointer}
+.clara-aviso{margin:8px 12px 0;padding:0}
+.clara-log{flex:1;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px;min-height:120px}
+.clara-log .bubble{max-width:94%;font-size:.95rem}
+.clara-em{border-color:#c25b4f!important;background:#fff3f1!important}
+.clara-chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 8px}
+.chip{background:#fff;border:1px solid #b9c9bd;color:var(--forest);border-radius:999px;padding:8px 12px;font:inherit;font-size:.85rem;cursor:pointer;min-height:44px}
+.chip:hover:not(:disabled){background:var(--mint);border-color:var(--sage)}.chip:disabled{opacity:.5}
+.clara-form{display:flex;gap:8px;padding:8px 12px 12px;border-top:1px solid var(--line)}
+.clara-form input{flex:1;min-width:0;padding:10px;border:1px solid #b9c9bd;border-radius:12px;font:inherit;min-height:44px}
+@media(max-width:640px){.clara-globo{display:none}.clara-fab{width:72px;height:72px}.clara-fab .clara-svg{width:56px;height:56px}}

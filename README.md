@@ -70,5 +70,5 @@ Backend en **Render** (Root Directory `backend`, Build `npm install`, Start `npm
 ## Antes de usar datos reales
 Ver `docs/antes-de-datos-reales.md`.
 
-## Asistente conversacional (experimental)
-Pestaña "Asistente (prueba)": hace toda la entrevista en formato chat y termina en el mismo resumen y envío. Ver `docs/chat-experimental.md`.
+## Clara, asistente acompañante
+Personaje animado abajo a la derecha que explica cada pregunta (con IA opcional). Ver `docs/asistente-clara.md`.

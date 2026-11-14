@@ -151,3 +151,24 @@ test('chat con IA: descarta valores inventados, respeta excluyentes y la emergen
   const f = await interpretar({ pasoId: 'ninos', texto: 'tengo una hija', config, env, ia: async () => { throw new Error('caída'); } });
   assert.deepEqual(f.valores, ['si']); assert.equal(f.via, 'reglas');
 });
+test('Clara: explicaciones de respaldo, emergencia, límites y IA simulada', async () => {
+  const info = await api('/ayuda'); assert.equal(info.body.nombre, 'Clara'); assert.equal(info.body.modo, 'reglas');
+  const q = (paso, mensaje) => api('/ayuda', { method: 'POST', body: { paso, mensaje } });
+  const a = await q('medidas', ''); assert.equal(a.status, 200); assert.match(a.body.respuesta, /medida de protección/i); assert.equal(a.body.via, 'reglas');
+  assert.match((await q('datos', 'para qué sirve el DNI')).body.respuesta, /opcional/i);
+  assert.match((await q('revision', 'qué pasa después de enviar')).body.respuesta, /seguimiento/i);
+  assert.ok((await q('paso_raro', 'no entiendo')).body.respuesta.length > 20); // paso desconocido: no falla
+  const em = await q('urgencia', 'me va a matar, está acá'); assert.equal(em.body.emergencia, true); assert.match(em.body.respuesta, /911/);
+  assert.equal((await q('medidas', 'x'.repeat(301))).status, 400);
+  assert.equal((await q('medidas', 123)).status, 400);
+  const { responder } = await import('../src/services/ayuda.js');
+  const env = { GEMINI_API_KEY: 'fake' };
+  let visto = '';
+  const ok = await responder({ pasoId: 'medidas', mensaje: 'explicame', config, env, ia: async (paso, m) => { visto = paso.label + '|' + m; return 'Respuesta de IA'; } });
+  assert.equal(ok.via, 'ia'); assert.match(visto, /medida de protección/); // la IA recibe la pregunta, nunca respuestas ni datos
+  let llamada = false;
+  const e2 = await responder({ pasoId: 'medidas', mensaje: 'socorro', config, env, ia: async () => { llamada = true; return 'x'; } });
+  assert.equal(e2.emergencia, true); assert.equal(llamada, false);
+  const caida = await responder({ pasoId: 'medidas', mensaje: 'explicame', config, env, ia: async () => { throw new Error('caída'); } });
+  assert.equal(caida.via, 'reglas'); assert.ok(caida.respuesta.length > 20);
+});
